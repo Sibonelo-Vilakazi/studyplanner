@@ -1,0 +1,25 @@
+﻿.row, #Content2 {
+    width: 100%;
+}
+.auto-style1 {
+    margin-top: 32px;
+}
+table {
+    width: 100%;
+}
+thead {
+    width: 100%;
+}
+th {
+    width: 20%;
+    text-align: center;
+    border: 1px solid black;
+}
+tbody {
+    width: 100%;
+}
+td {
+    width: 20%;
+    text-align: center;
+    border: 1px solid black;
+}

@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StudyPlannerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="StudyPlannerEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Modules" EntityType="StudyPlannerModel.Module" />
+    <EntitySet Name="Module_Hours" EntityType="StudyPlannerModel.Module_Hours" />
+    <EntitySet Name="Semester_Details" EntityType="StudyPlannerModel.Semester_Details" />
+    <EntitySet Name="Track_Module" EntityType="StudyPlannerModel.Track_Module" />
+    <EntitySet Name="Users" EntityType="StudyPlannerModel.User" />
+    <AssociationSet Name="FK_Module_Hours_Module" Association="StudyPlannerModel.FK_Module_Hours_Module">
+      <End Role="Module" EntitySet="Modules" />
+      <End Role="Module_Hours" EntitySet="Module_Hours" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Module_User" Association="StudyPlannerModel.FK_Module_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Module" EntitySet="Modules" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Track_Module_Module" Association="StudyPlannerModel.FK_Track_Module_Module">
+      <End Role="Module" EntitySet="Modules" />
+      <End Role="Track_Module" EntitySet="Track_Module" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Semester_Details_User" Association="StudyPlannerModel.FK_Semester_Details_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Semester_Details" EntitySet="Semester_Details" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Module">
+    <Key>
+      <PropertyRef Name="module_id" />
+    </Key>
+    <Property Name="module_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="module_code" Type="String" Nullable="false" MaxLength="225" FixedLength="false" Unicode="false" />
+    <Property Name="module_name" Type="String" Nullable="false" MaxLength="225" FixedLength="false" Unicode="false" />
+    <Property Name="module_credit" Type="Int32" Nullable="false" />
+    <Property Name="module_class_hours" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Module_Hours" Relationship="StudyPlannerModel.FK_Module_Hours_Module" FromRole="Module" ToRole="Module_Hours" />
+    <NavigationProperty Name="User" Relationship="StudyPlannerModel.FK_Module_User" FromRole="Module" ToRole="User" />
+    <NavigationProperty Name="Track_Module" Relationship="StudyPlannerModel.FK_Track_Module_Module" FromRole="Module" ToRole="Track_Module" />
+  </EntityType>
+  <EntityType Name="Module_Hours">
+    <Key>
+      <PropertyRef Name="module_hour_id" />
+    </Key>
+    <Property Name="module_hour_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="module_id" Type="Int32" Nullable="false" />
+    <Property Name="hours_remaining" Type="Int32" Nullable="false" />
+    <Property Name="week_start_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="week_end_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="self_studying_hours" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Module" Relationship="StudyPlannerModel.FK_Module_Hours_Module" FromRole="Module_Hours" ToRole="Module" />
+  </EntityType>
+  <EntityType Name="Semester_Details">
+    <Key>
+      <PropertyRef Name="semester_id" />
+    </Key>
+    <Property Name="semester_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="num_weeks" Type="Int32" Nullable="false" />
+    <Property Name="start_date" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="User" Relationship="StudyPlannerModel.FK_Semester_Details_User" FromRole="Semester_Details" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Track_Module">
+    <Key>
+      <PropertyRef Name="track_id" />
+    </Key>
+    <Property Name="track_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="module_id" Type="Int32" Nullable="false" />
+    <Property Name="track_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="track_study_hour" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Module" Relationship="StudyPlannerModel.FK_Track_Module_Module" FromRole="Track_Module" ToRole="Module" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" Nullable="false" MaxLength="225" FixedLength="false" Unicode="false" />
+    <Property Name="password" Type="String" Nullable="false" MaxLength="225" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Modules" Relationship="StudyPlannerModel.FK_Module_User" FromRole="User" ToRole="Module" />
+    <NavigationProperty Name="Semester_Details" Relationship="StudyPlannerModel.FK_Semester_Details_User" FromRole="User" ToRole="Semester_Details" />
+  </EntityType>
+  <Association Name="FK_Module_Hours_Module">
+    <End Type="StudyPlannerModel.Module" Role="Module" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="StudyPlannerModel.Module_Hours" Role="Module_Hours" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Module">
+        <PropertyRef Name="module_id" />
+      </Principal>
+      <Dependent Role="Module_Hours">
+        <PropertyRef Name="module_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Module_User">
+    <End Type="StudyPlannerModel.User" Role="User" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="StudyPlannerModel.Module" Role="Module" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="Module">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Track_Module_Module">
+    <End Type="StudyPlannerModel.Module" Role="Module" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="StudyPlannerModel.Track_Module" Role="Track_Module" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Module">
+        <PropertyRef Name="module_id" />
+      </Principal>
+      <Dependent Role="Track_Module">
+        <PropertyRef Name="module_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Semester_Details_User">
+    <End Type="StudyPlannerModel.User" Role="User" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="StudyPlannerModel.Semester_Details" Role="Semester_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="Semester_Details">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

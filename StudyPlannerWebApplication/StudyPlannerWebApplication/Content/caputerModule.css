@@ -1,0 +1,28 @@
+﻿body {
+}
+
+#BodyContent {
+    width: 100%;
+}
+
+.capture-content {
+    width: 100%;
+    height:100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+}
+h2{
+    margin-bottom:10px;
+}
+
+input {
+    width: 360px;
+    margin-bottom: 16px;
+    padding: 10px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.4);
+}

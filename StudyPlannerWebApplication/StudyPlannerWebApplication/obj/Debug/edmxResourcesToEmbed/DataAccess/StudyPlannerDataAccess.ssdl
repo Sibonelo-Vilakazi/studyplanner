@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StudyPlannerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Module">
+    <Key>
+      <PropertyRef Name="module_id" />
+    </Key>
+    <Property Name="module_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_id" Type="int" Nullable="false" />
+    <Property Name="module_code" Type="varchar" MaxLength="225" Nullable="false" />
+    <Property Name="module_name" Type="varchar" MaxLength="225" Nullable="false" />
+    <Property Name="module_credit" Type="int" Nullable="false" />
+    <Property Name="module_class_hours" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Module_Hours">
+    <Key>
+      <PropertyRef Name="module_hour_id" />
+    </Key>
+    <Property Name="module_hour_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="module_id" Type="int" Nullable="false" />
+    <Property Name="hours_remaining" Type="int" Nullable="false" />
+    <Property Name="week_start_date" Type="datetime" Nullable="false" />
+    <Property Name="week_end_date" Type="datetime" Nullable="false" />
+    <Property Name="self_studying_hours" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Semester_Details">
+    <Key>
+      <PropertyRef Name="semester_id" />
+    </Key>
+    <Property Name="semester_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_id" Type="int" Nullable="false" />
+    <Property Name="num_weeks" Type="int" Nullable="false" />
+    <Property Name="start_date" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Track_Module">
+    <Key>
+      <PropertyRef Name="track_id" />
+    </Key>
+    <Property Name="track_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="module_id" Type="int" Nullable="false" />
+    <Property Name="track_date" Type="datetime" Nullable="false" />
+    <Property Name="track_study_hour" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="username" Type="varchar" MaxLength="225" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="225" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Module_Hours_Module">
+    <End Role="Module" Type="Self.Module" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Module_Hours" Type="Self.Module_Hours" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Module">
+        <PropertyRef Name="module_id" />
+      </Principal>
+      <Dependent Role="Module_Hours">
+        <PropertyRef Name="module_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Module_User">
+    <End Role="User" Type="Self.User" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Module" Type="Self.Module" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="Module">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Semester_Details_User">
+    <End Role="User" Type="Self.User" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Semester_Details" Type="Self.Semester_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="Semester_Details">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Track_Module_Module">
+    <End Role="Module" Type="Self.Module" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Track_Module" Type="Self.Track_Module" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Module">
+        <PropertyRef Name="module_id" />
+      </Principal>
+      <Dependent Role="Track_Module">
+        <PropertyRef Name="module_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="StudyPlannerModelStoreContainer">
+    <EntitySet Name="Module" EntityType="Self.Module" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Module_Hours" EntityType="Self.Module_Hours" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Semester_Details" EntityType="Self.Semester_Details" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Track_Module" EntityType="Self.Track_Module" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Module_Hours_Module" Association="Self.FK_Module_Hours_Module">
+      <End Role="Module" EntitySet="Module" />
+      <End Role="Module_Hours" EntitySet="Module_Hours" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Module_User" Association="Self.FK_Module_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Module" EntitySet="Module" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Semester_Details_User" Association="Self.FK_Semester_Details_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Semester_Details" EntitySet="Semester_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Track_Module_Module" Association="Self.FK_Track_Module_Module">
+      <End Role="Module" EntitySet="Module" />
+      <End Role="Track_Module" EntitySet="Track_Module" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

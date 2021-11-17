@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="StudyPlannerModelStoreContainer" CdmEntityContainer="StudyPlannerEntities">
+    <EntitySetMapping Name="Modules">
+      <EntityTypeMapping TypeName="StudyPlannerModel.Module">
+        <MappingFragment StoreEntitySet="Module">
+          <ScalarProperty Name="module_class_hours" ColumnName="module_class_hours" />
+          <ScalarProperty Name="module_credit" ColumnName="module_credit" />
+          <ScalarProperty Name="module_name" ColumnName="module_name" />
+          <ScalarProperty Name="module_code" ColumnName="module_code" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="module_id" ColumnName="module_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Module_Hours">
+      <EntityTypeMapping TypeName="StudyPlannerModel.Module_Hours">
+        <MappingFragment StoreEntitySet="Module_Hours">
+          <ScalarProperty Name="self_studying_hours" ColumnName="self_studying_hours" />
+          <ScalarProperty Name="week_end_date" ColumnName="week_end_date" />
+          <ScalarProperty Name="week_start_date" ColumnName="week_start_date" />
+          <ScalarProperty Name="hours_remaining" ColumnName="hours_remaining" />
+          <ScalarProperty Name="module_id" ColumnName="module_id" />
+          <ScalarProperty Name="module_hour_id" ColumnName="module_hour_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Semester_Details">
+      <EntityTypeMapping TypeName="StudyPlannerModel.Semester_Details">
+        <MappingFragment StoreEntitySet="Semester_Details">
+          <ScalarProperty Name="start_date" ColumnName="start_date" />
+          <ScalarProperty Name="num_weeks" ColumnName="num_weeks" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="semester_id" ColumnName="semester_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Track_Module">
+      <EntityTypeMapping TypeName="StudyPlannerModel.Track_Module">
+        <MappingFragment StoreEntitySet="Track_Module">
+          <ScalarProperty Name="track_study_hour" ColumnName="track_study_hour" />
+          <ScalarProperty Name="track_date" ColumnName="track_date" />
+          <ScalarProperty Name="module_id" ColumnName="module_id" />
+          <ScalarProperty Name="track_id" ColumnName="track_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="StudyPlannerModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

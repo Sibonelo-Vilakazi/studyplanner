@@ -1,0 +1,45 @@
+﻿#BodyContent{
+    width:100%;
+    
+    display:flex;
+    align-items:center;
+}
+
+input {
+    width: 100%;
+    margin-bottom: 16px;
+    padding: 10px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.4);
+}
+
+.semester-content {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+}
+
+#btnSubmit {
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    width: 50%;
+    height: 40px;
+    margin-top: 10px;
+    font-weight: 700;
+}
+
+#btnSubmit:hover {
+    background: rgb(0,0,0);
+    color: white;
+    cursor: pointer;
+}
+    #btnSubmit:disabled:hover {
+        background: none;
+        color: black; 
+        cursor: default;
+    }
